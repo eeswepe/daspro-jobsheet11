@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Kafe26 {
+    static Scanner sc = new Scanner(System.in);
     public static void Menu(String namaPelanggan, boolean isMember, String kodePromo) {
         System.out.println("Selamat datang, " + namaPelanggan + "!");
         if (isMember) {
@@ -42,19 +43,34 @@ public class Kafe26 {
         return hargaTotal;
     }
 
+    public static int banyakMenu(){
+        int totalBayar = 0;
+        while(true){
+            System.out.print("Masukkan nomor menu yang ingin Anda pesan: ");
+            int pilihanMenu = sc.nextInt();
+            if(pilihanMenu < 1 || pilihanMenu > 6){
+                System.out.println("Menu tidak tersedia.");
+                continue;
+            }
+            System.out.print("Masukkan jumlah item yang ingin dipesan: ");
+            int banyakItem = sc.nextInt();
+            sc.nextLine();
+            System.out.print("Masukkan kode promo:");
+            String kodePromo = sc.nextLine();
+            totalBayar += hitungTotalHarga (pilihanMenu, banyakItem, kodePromo);
+            System.out.print("Apakah Anda ingin memesan menu lain? (y/n): ");
+            char lanjut = sc.next().charAt(0);
+            if(lanjut == 'n'){
+                break;
+            }
+        }
+        return totalBayar;
+    }
+
     public static void main(String[] args) {
         Menu("Andi", true, "DISKON30");
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("\nMasukkan nomor menu yang ingin Anda pesan: ");
-        int pilihanMenu = sc.nextInt();
-        System.out.print("Masukkan jumlah item yang ingin dipesan: ");
-        int banyakItem = sc.nextInt();
-        sc.nextLine();
-        System.out.print("Masukkan kode promo:");
-        String kodePromo = sc.nextLine(); 
-        int totalHarga = hitungTotalHarga (pilihanMenu, banyakItem, kodePromo);
-        System.out.println("Total harga untuk pesanan Anda: Rp" + totalHarga);
+        int totalBayar = banyakMenu();
+        System.out.println("Total bayar: " + totalBayar);
     }
 
 }
